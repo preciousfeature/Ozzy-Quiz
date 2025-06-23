@@ -1,70 +1,41 @@
 const quizData = [
   {
     question: "What band did Ozzy first rise to fame with?",
-    options: {
-      a: "Metallica",
-      b: "Black Sabbath", // ✅ correct
-      c: "AC/DC"
-    },
+    options: { a: "Metallica", b: "Black Sabbath", c: "AC/DC" },
     correct: "b"
   },
   {
     question: "What is Ozzy Osbourne’s real first name?",
-    options: {
-      a: "Oscar",
-      b: "John", // ✅ correct
-      c: "Ozric"
-    },
+    options: { a: "Oscar", b: "John", c: "Ozric" },
     correct: "b"
   },
   {
     question: "Which reality TV show brought Ozzy’s family into the spotlight?",
-    options: {
-      a: "Rock Nation",
-      b: "The Osbournes", // ✅ correct
-      c: "Life with Ozzy"
-    },
+    options: { a: "Rock Nation", b: "The Osbournes", c: "Life with Ozzy" },
     correct: "b"
   },
   {
     question: "What shocking act did Ozzy perform on stage in 1982?",
-    options: {
-      a: "Lit a guitar on fire",
-      b: "Threw blood on fans",
-      c: "Bit the head off a bat" // ✅ correct
-    },
+    options: { a: "Lit a guitar on fire", b: "Threw blood on fans", c: "Bit the head off a bat" },
     correct: "c"
   },
   {
     question: "What is the name of Ozzy Osbourne’s 1980 debut solo album?",
-    options: {
-      a: "Blizzard of Ozz", // ✅ correct
-      b: "Diary of a Madman",
-      c: "Bark at the Moon"
-    },
+    options: { a: "Blizzard of Ozz", b: "Diary of a Madman", c: "Bark at the Moon" },
     correct: "a"
   },
   {
     question: "Why was Ozzy banned from San Antonio in the 1980s?",
-    options: {
-      a: "He smashed a hotel room",
-      b: "He urinated on a historic monument", // ✅ correct
-      c: "He cursed at the mayor"
-    },
+    options: { a: "He smashed a hotel room", b: "He urinated on a historic monument", c: "He cursed at the mayor" },
     correct: "b"
   },
   {
     question: "Which guitarist famously played with Ozzy before dying in a plane crash?",
-    options: {
-      a: "Tony Iommi",
-      b: "Randy Rhoads", // ✅ correct
-      c: "Zakk Wylde"
-    },
+    options: { a: "Tony Iommi", b: "Randy Rhoads", c: "Zakk Wylde" },
     correct: "b"
   }
 ];
 
-// Shuffle helper
 function shuffle(array) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -73,11 +44,12 @@ function shuffle(array) {
   return array;
 }
 
-// Load quiz into the page
+let shuffledQuestions = [];
+
 function loadQuiz() {
   const form = document.getElementById("quizForm");
   form.innerHTML = "";
-  const shuffledQuestions = shuffle([...quizData]);
+  shuffledQuestions = shuffle([...quizData]);
 
   shuffledQuestions.forEach((q, index) => {
     const qId = `q${index + 1}`;
@@ -88,10 +60,12 @@ function loadQuiz() {
     let html = `<p><strong>${index + 1}.</strong> ${q.question}</p>`;
     options.forEach(([key, text]) => {
       html += `
-        <label>
-          <input type="radio" name="${qId}" value="${key}">
-          ${text}
-        </label><br>
+        <div>
+          <label>
+            <input type="radio" name="${qId}" value="${key}">
+            ${text}
+          </label>
+        </div>
       `;
     });
 
@@ -102,33 +76,76 @@ function loadQuiz() {
   form.innerHTML += `<button type="submit">Submit Quiz</button>`;
 }
 
+function getTimestamp() {
+  const now = new Date();
+  return now.toLocaleString(); // Example: "6/22/2025, 10:15:30 PM"
+}
+
+function exportScoreToCSV(name, score, total) {
+  const timestamp = getTimestamp();
+  const data = `Name,Score,Total,Timestamp\n${name},${score},${total},"${timestamp}"`;
+  const blob = new Blob([data], { type: "text/csv" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = `${name}_ozzy_quiz_score.csv`;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+
 document.addEventListener("DOMContentLoaded", function () {
   loadQuiz();
 
   document.getElementById("quizForm").addEventListener("submit", function (e) {
     e.preventDefault();
     let score = 0;
-    const form = e.target;
     const result = document.getElementById("result");
     result.innerHTML = "";
 
-    [...form.querySelectorAll(".question")].forEach((questionDiv, index) => {
-      const qId = `q${index + 1}`;
-      const userAnswer = form.querySelector(`input[name="${qId}"]:checked`);
-      const correct = quizData[index].correct;
-      const correctLabel = questionDiv.querySelector(`input[value="${correct}"]`).parentElement;
+    const playerName = document.getElementById("playerName").value.trim();
+    if (!playerName) {
+      alert("Please enter your name before submitting the quiz.");
+      return;
+    }
 
-      if (userAnswer && userAnswer.value === correct) {
+    const questionDivs = document.querySelectorAll(".question");
+
+    questionDivs.forEach((div, index) => {
+      const qId = `q${index + 1}`;
+      const question = shuffledQuestions[index];
+      const correctAnswer = question.correct;
+      const selected = document.querySelector(`input[name="${qId}"]:checked`);
+
+      div.querySelectorAll("label").forEach(l => l.style.color = "");
+
+      if (selected && selected.value === correctAnswer) {
         score++;
-        correctLabel.style.color = "lightgreen";
-      } else {
-        if (userAnswer) {
-          userAnswer.parentElement.style.color = "red";
-        }
-        correctLabel.style.color = "lightgreen";
       }
     });
 
-    result.innerHTML = `<h2>You got ${score} out of ${quizData.length} correct!</h2>`;
+    questionDivs.forEach((div, index) => {
+      const qId = `q${index + 1}`;
+      const question = shuffledQuestions[index];
+      const correctAnswer = question.correct;
+      const selected = document.querySelector(`input[name="${qId}"]:checked`);
+      const correctInput = div.querySelector(`input[value="${correctAnswer}"]`);
+      const correctLabel = correctInput?.parentElement;
+
+      if (selected) {
+        if (selected.value === correctAnswer) {
+          selected.parentElement.style.color = "lightgreen";
+        } else {
+          selected.parentElement.style.color = "red";
+          if (correctLabel) correctLabel.style.color = "lightgreen";
+        }
+      } else {
+        if (correctLabel) correctLabel.style.color = "lightgreen";
+      }
+    });
+
+    result.innerHTML = `<h2>${playerName}, you got ${score} out of ${shuffledQuestions.length} correct!</h2>`;
+
+    exportScoreToCSV(playerName, score, shuffledQuestions.length);
   });
 });
