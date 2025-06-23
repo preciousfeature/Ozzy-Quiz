@@ -5,30 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ozzy Osbourne Quiz</title>
   <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 </head>
 <body>
   <h1>Ozzy Osbourne Quiz</h1>
 
-  <!-- Player Name Input with styling -->
-<div id="userInfo">
-  <label for="playerName">Enter your name:</label>
-  <input type="text" id="playerName" name="playerName" required placeholder="e.g. OzzyFan123" />
-</div>
+  <!-- Player Name Input -->
+  <div id="userInfo">
+    <label for="playerName">Enter your name:</label><br>
+    <input type="text" id="playerName" name="playerName" required placeholder="e.g. OzzyFan123" />
+  </div>
 
-<!-- Quiz form -->
-<form id="quizForm"></form>
-
-<!-- Result Section (will be turned into an image) -->
-<div id="result"></div>
-
-
-  <!-- 🧠 Quiz Form Loads Here -->
+  <!-- Quiz Form -->
   <form id="quizForm"></form>
 
-  <!-- 🟢 Result Display -->
+  <!-- Results -->
   <div id="result"></div>
 
-  <!-- ⚙️ Script File -->
   <script src="script.js"></script>
 </body>
 </html>
