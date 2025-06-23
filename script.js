@@ -76,14 +76,10 @@ function loadQuiz() {
   form.innerHTML += `<button type="submit" id="submitBtn">Submit Quiz</button>`;
 }
 
-function getTimestamp() {
-  const now = new Date();
-  return now.toLocaleString();
 function generateImage(playerName, score, total) {
   const resultDiv = document.getElementById("result");
-
-  // Add a class to style the certificate result div
   resultDiv.classList.add("certificate");
+
   resultDiv.innerHTML = `
     <h2>🎸 Ozzy Osbourne Quiz Results 🎸</h2>
     <p><strong>Name:</strong> ${playerName}</p>
@@ -107,14 +103,9 @@ document.addEventListener("DOMContentLoaded", function () {
   form.addEventListener("submit", function (e) {
     e.preventDefault();
 
-    // Disable submit button after first click
     const submitBtn = document.getElementById("submitBtn");
     submitBtn.disabled = true;
     submitBtn.innerText = "Submitted";
-
-    let score = 0;
-    const result = document.getElementById("result");
-    result.innerHTML = "";
 
     const playerName = document.getElementById("playerName").value.trim();
     if (!playerName) {
@@ -124,6 +115,7 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
+    let score = 0;
     const questionDivs = document.querySelectorAll(".question");
 
     questionDivs.forEach((div, index) => {
@@ -131,6 +123,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const question = shuffledQuestions[index];
       const correctAnswer = question.correct;
       const selected = document.querySelector(`input[name="${qId}"]:checked`);
+
       div.querySelectorAll("label").forEach(l => l.style.color = "");
       if (selected && selected.value === correctAnswer) {
         score++;
@@ -157,7 +150,6 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
 
-    result.innerHTML = `<h2>${playerName}, you got ${score} out of ${shuffledQuestions.length} correct!</h2>`;
     generateImage(playerName, score, shuffledQuestions.length);
   });
 });
