@@ -79,19 +79,25 @@ function loadQuiz() {
 function getTimestamp() {
   const now = new Date();
   return now.toLocaleString();
-}
+function generateImage(playerName, score, total) {
+  const resultDiv = document.getElementById("result");
 
-function exportScoreToCSV(name, score, total) {
-  const timestamp = getTimestamp();
-  const data = `Name,Score,Total,Timestamp\n${name},${score},${total},"${timestamp}"`;
-  const blob = new Blob([data], { type: "text/csv" });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = `${name}_ozzy_quiz_score.csv`;
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
+  // Add a class to style the certificate result div
+  resultDiv.classList.add("certificate");
+  resultDiv.innerHTML = `
+    <h2>🎸 Ozzy Osbourne Quiz Results 🎸</h2>
+    <p><strong>Name:</strong> ${playerName}</p>
+    <p><strong>Score:</strong> ${score} / ${total}</p>
+    <p><strong>Date:</strong> ${new Date().toLocaleString()}</p>
+    <p>Keep rockin' 🤘</p>
+  `;
+
+  html2canvas(resultDiv).then(canvas => {
+    const link = document.createElement("a");
+    link.download = `${playerName}_ozzy_quiz.png`;
+    link.href = canvas.toDataURL("image/png");
+    link.click();
+  });
 }
 
 document.addEventListener("DOMContentLoaded", function () {
