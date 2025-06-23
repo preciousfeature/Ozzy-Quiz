@@ -73,12 +73,12 @@ function loadQuiz() {
     form.appendChild(questionBlock);
   });
 
-  form.innerHTML += `<button type="submit">Submit Quiz</button>`;
+  form.innerHTML += `<button type="submit" id="submitBtn">Submit Quiz</button>`;
 }
 
 function getTimestamp() {
   const now = new Date();
-  return now.toLocaleString(); // Example: "6/22/2025, 10:15:30 PM"
+  return now.toLocaleString();
 }
 
 function exportScoreToCSV(name, score, total) {
@@ -97,8 +97,15 @@ function exportScoreToCSV(name, score, total) {
 document.addEventListener("DOMContentLoaded", function () {
   loadQuiz();
 
-  document.getElementById("quizForm").addEventListener("submit", function (e) {
+  const form = document.getElementById("quizForm");
+  form.addEventListener("submit", function (e) {
     e.preventDefault();
+
+    // Disable submit button after first click
+    const submitBtn = document.getElementById("submitBtn");
+    submitBtn.disabled = true;
+    submitBtn.innerText = "Submitted";
+
     let score = 0;
     const result = document.getElementById("result");
     result.innerHTML = "";
@@ -106,6 +113,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const playerName = document.getElementById("playerName").value.trim();
     if (!playerName) {
       alert("Please enter your name before submitting the quiz.");
+      submitBtn.disabled = false;
+      submitBtn.innerText = "Submit Quiz";
       return;
     }
 
@@ -116,9 +125,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const question = shuffledQuestions[index];
       const correctAnswer = question.correct;
       const selected = document.querySelector(`input[name="${qId}"]:checked`);
-
       div.querySelectorAll("label").forEach(l => l.style.color = "");
-
       if (selected && selected.value === correctAnswer) {
         score++;
       }
@@ -145,7 +152,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     result.innerHTML = `<h2>${playerName}, you got ${score} out of ${shuffledQuestions.length} correct!</h2>`;
-
     exportScoreToCSV(playerName, score, shuffledQuestions.length);
   });
 });
