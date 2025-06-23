@@ -1,62 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ozzy Osbourne Quiz</title>
-  <link rel="stylesheet" href="style.css">
-  <div id="userInfo">
-  <label for="playerName">Enter your name:</label>
-  <input type="text" id="playerName" name="playerName">
-</div>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <h1>Ozzy Osbourne Quiz</h1>
-<form id="quizForm"></form>
-<div id="result"></div>
-      <p>1. What band did Ozzy first rise to fame with?</p>
-      <label><input type="radio" name="q1" value="a"> Metallica</label>
-      <label><input type="radio" name="q1" value="b"> Black Sabbath</label>
-      <label><input type="radio" name="q1" value="c"> AC/DC</label>
-    </div>
-    <div class="question">
-      <p>2. What is Ozzy Osbourne’s real first name?</p>
-      <label><input type="radio" name="q2" value="a"> Oscar</label>
-      <label><input type="radio" name="q2" value="b"> John</label>
-      <label><input type="radio" name="q2" value="c"> Ozric</label>
-    </div>
-      <div class="question">
-      <p>3. Which reality TV show brought Ozzy’s family into the spotlight?</p>
-      <label><input type="radio" name="q3" value="a"> Rock Nation</label>
-      <label><input type="radio" name="q3" value="b"> The Osbournes</label>
-      <label><input type="radio" name="q3" value="c">Life with Ozzy</label>
-    </div>
-      <div class="question">
-      <p>4. What shocking act did Ozzy perform on stage in 1982?</p>
-      <label><input type="radio" name="q4" value="a"> Lit a guitar on fire</label>
-      <label><input type="radio" name="q4" value="b"> Threw blood on fans</label>
-      <label><input type="radio" name="q4" value="c"> Bite the head off a bat</label>
-    </div>
-      <div class="question">
-      <p>5.What is the name of Ozzy Osbourne’s 1980 debut solo album?</p>
-      <label><input type="radio" name="q5" value="a"> Blizzard Of Ozz</label>
-      <label><input type="radio" name="q5" value="b"> Diary of a madman</label>
-      <label><input type="radio" name="q5" value="c"> Bark at the moon</label>
-    </div>
-      <div class="question">
-      <p>6. Why was Ozzy banned from San Antonio in the 1980s?</p>
-      <label><input type="radio" name="q6" value="a"> He smashed a hotel room</label>
-      <label><input type="radio" name="q6" value="b"> Urinated on a historic monument</label>
-      <label><input type="radio" name="q6" value="c"> Cursed at the Mayor</label>
-    </div>
-      <div class="question">
-      <p>7.Which guitarist famously played with Ozzy before dying in a plane crash?</p>
-      <label><input type="radio" name="q7" value="a"> Tony Lommi</label>
-      <label><input type="radio" name="q7" value="b"> Randy Rhoads</label>
-      <label><input type="radio" name="q7" value="c"> Zakk Wylde</label>
-    </div>
-    <button type="submit">Submit Quiz</button>
-  </form>
+
+  <!-- 🎯 Player Name Input -->
+  <div id="userInfo">
+    <label for="playerName">Enter your name:</label>
+    <input type="text" id="playerName" name="playerName" required placeholder="e.g. OzzyFan123" />
+  </div>
+
+  <!-- 🧠 Quiz Form Loads Here -->
+  <form id="quizForm"></form>
+
+  <!-- 🟢 Result Display -->
   <div id="result"></div>
+
+  <!-- ⚙️ Script File -->
   <script src="script.js"></script>
 </body>
 </html>
