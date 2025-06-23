@@ -1,0 +1,18 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #111;
+  color: #fff;
+  padding: 20px;
+}
+h1 {
+  color: #f90;
+}
+.question {
+  margin-bottom: 20px;
+}
+button {
+  padding: 10px 20px;
+  background: #f90;
+  border: none;
+  cursor: pointer;
+}
