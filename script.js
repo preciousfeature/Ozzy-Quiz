@@ -158,6 +158,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     result.innerHTML = `<h2>${playerName}, you got ${score} out of ${shuffledQuestions.length} correct!</h2>`;
-    exportScoreToCSV(playerName, score, shuffledQuestions.length);
+    generateImage(playerName, score, shuffledQuestions.length);
   });
 });
