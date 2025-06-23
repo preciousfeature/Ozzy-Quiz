@@ -6,6 +6,12 @@ body {
   max-width: 600px;
   margin: auto;
 }
+
+h1 {
+  color: #f90;
+  text-align: center;
+}
+
 #userInfo {
   margin-bottom: 20px;
   text-align: center;
@@ -20,11 +26,6 @@ body {
   border-radius: 8px;
   background-color: #222;
   color: white;
-  text-align: center;
-}
-
-h1 {
-  color: #f90;
   text-align: center;
 }
 
@@ -73,5 +74,13 @@ button:hover {
   font-size: 18px;
   font-weight: bold;
   margin-top: 30px;
-  color: #0f0;
+  color: white;
+  background-color: #222;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.certificate h2 {
+  color: #f90;
+  margin-bottom: 10px;
 }
